@@ -7,39 +7,60 @@
 #pragma comment(linker, "/EXPORT:destroy=destroy")
 #endif
 
+
 #include <Python.h>
+
 #include <hap.h>
+#include "engine.h"
+
+
+PyObject *wat;
+
 
 void* create(HAPEngine *engine) {
-	Py_SetProgramName(((wchar_t**) (*engine).argvp)[0]);
-	Py_Initialize();
-	return NULL;
+    wchar_t *program = Py_DecodeLocale((*engine).name, NULL);
+
+    if (program == NULL)
+        (*engine).log_fatal_error(
+            engine,
+            30,
+            "Can not initialize locale for %s.\n",
+            (*engine).name
+        );
+
+    PyImport_AppendInittab((*engine).name, PyInit_hap);
+
+    Py_SetProgramName(((wchar_t**) (*engine).argvp)[0]);
+    Py_Initialize();
+
+    return program;
 }
 
 
 void load(HAPEngine *engine, void *state, char *identifier) {
-	(void)engine;
-	(void)identifier;
-	(void)state;
+    (void)engine;
+    (void)identifier;
+    (void)state;
 }
 
 
 HAPTime update(HAPEngine *engine, void *state) {
-	(void)engine;
-	(void)state;
-	
-	return 0;
+    (void)engine;
+    (void)state;
+
+    return 0;
 }
 
 
 void unload(HAPEngine *engine, void *state) {
-	(void)engine;
-	(void)state;
+    (void)engine;
+    (void)state;
 }
 
 
 void destroy(HAPEngine *engine, void *state) {
-	(void)state;
+    (void)engine;
 
-	Py_Finalize();
+    Py_Finalize();
+    PyMem_RawFree(state);
 }
