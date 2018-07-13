@@ -8,6 +8,12 @@
 #endif
 
 
+// Because some people thing Windows is a good idea
+#ifdef OS_Windows
+#include <Windows.h>
+#endif
+
+
 #include <Python.h>
 
 #include <hap.h>
