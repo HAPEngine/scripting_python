@@ -36,8 +36,9 @@ void* create(HAPEngine *engine) {
 
     PyImport_AppendInittab((*engine).name, PyInit_hap);
 
-    Py_SetProgramName((*engine).name);
+    Py_SetProgramName(((wchar_t**) (*engine).argvp)[0]);
     Py_Initialize();
+
 
     return program;
 }
