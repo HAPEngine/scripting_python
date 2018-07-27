@@ -23,7 +23,7 @@
 PyObject *wat;
 
 
-void* create(HAPEngine *engine) {
+void* create(HAPEngine *engine, HAPConfigurationSection *configuration) {
     wchar_t *program = Py_DecodeLocale((*engine).name, NULL);
 
     if (program == NULL)
