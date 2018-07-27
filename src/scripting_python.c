@@ -39,7 +39,6 @@ void* create(HAPEngine *engine) {
     Py_SetProgramName(((wchar_t**) (*engine).argvp)[0]);
     Py_Initialize();
 
-
     return program;
 }
 
@@ -48,6 +47,9 @@ void load(HAPEngine *engine, void *state, char *identifier) {
     (void)engine;
     (void)identifier;
     (void)state;
+
+    // TODO: Add engine APIs to Python so that we can log_debug via Python
+    PyRun_SimpleString("print('Python scripting enabled')");
 }
 
 
