@@ -23,7 +23,7 @@
 PyObject *wat;
 
 
-void* create(HAPEngine *engine, HAPConfigurationSection *configuration) {
+HAP_MODULE_EXPORT void* create(HAPEngine *engine, HAPConfigurationSection *configuration) {
     wchar_t *program = Py_DecodeLocale((*engine).name, NULL);
 
     if (program == NULL)
@@ -43,7 +43,7 @@ void* create(HAPEngine *engine, HAPConfigurationSection *configuration) {
 }
 
 
-void load(HAPEngine *engine, void *state, char *identifier) {
+HAP_MODULE_EXPORT void load(HAPEngine *engine, void *state, char *identifier) {
     (void)engine;
     (void)identifier;
     (void)state;
@@ -53,7 +53,7 @@ void load(HAPEngine *engine, void *state, char *identifier) {
 }
 
 
-HAPTime update(HAPEngine *engine, void *state) {
+HAP_MODULE_EXPORT HAPTime update(HAPEngine *engine, void *state) {
     (void)engine;
     (void)state;
 
@@ -61,13 +61,13 @@ HAPTime update(HAPEngine *engine, void *state) {
 }
 
 
-void unload(HAPEngine *engine, void *state) {
+HAP_MODULE_EXPORT void unload(HAPEngine *engine, void *state) {
     (void)engine;
     (void)state;
 }
 
 
-void destroy(HAPEngine *engine, void *state) {
+HAP_MODULE_EXPORT void destroy(HAPEngine *engine, void *state) {
     (void)engine;
 
     Py_Finalize();
