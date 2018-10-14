@@ -1,13 +1,3 @@
-/** Modifies the linker so that it uses proper symbol names in MSVC. **/
-#ifdef OS_Windows
-#pragma comment(linker, "/EXPORT:create=create")
-#pragma comment(linker, "/EXPORT:load=load")
-#pragma comment(linker, "/EXPORT:update=update")
-#pragma comment(linker, "/EXPORT:unload=unload")
-#pragma comment(linker, "/EXPORT:destroy=destroy")
-#endif
-
-
 // Because some people thing Windows is a good idea
 #ifdef OS_Windows
 #include <Windows.h>
@@ -18,9 +8,6 @@
 
 #include <hap.h>
 #include "engine.h"
-
-
-PyObject *wat;
 
 
 HAP_MODULE_EXPORT void* create(HAPEngine *engine, HAPConfigurationSection *configuration) {
@@ -49,7 +36,7 @@ HAP_MODULE_EXPORT void load(HAPEngine *engine, void *state, char *identifier) {
     (void)state;
 
     // TODO: Add engine APIs to Python so that we can log_debug via Python
-    PyRun_SimpleString("print('Python scripting enabled')");
+	(*engine).log_debug(engine, "Loaded Python scripting plugin");
 }
 
 
